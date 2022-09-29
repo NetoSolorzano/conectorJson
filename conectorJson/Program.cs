@@ -89,23 +89,30 @@ namespace conectorJson
                                       "\"dni\":\"" + numero + "\"}";
                         streamWriter.Write(json);
                     }
-                    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                    string datos = "";
+                    try
                     {
-                        var result = streamReader.ReadToEnd();
-                        var masticado = JObject.Parse(result);
-                        //Console.WriteLine(masticado["success"]);
-                        //Console.WriteLine(masticado["dni"]);
-                        //Console.WriteLine(masticado["nombre_completo"]);
-                        //Console.ReadKey();
-                        string datos = "";
-                        if (masticado["success"].ToString() == "True")
+                        var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                         {
-                            datos = masticado["dni"].ToString().Trim() + "|" +
-                                masticado["nombre_completo"].ToString();
+                            var result = streamReader.ReadToEnd();
+                            var masticado = JObject.Parse(result);
+                            //Console.WriteLine(masticado["success"]);
+                            //Console.WriteLine(masticado["dni"]);
+                            //Console.WriteLine(masticado["nombre_completo"]);
+                            //Console.ReadKey();
+                            if (masticado["success"].ToString() == "True")
+                            {
+                                datos = masticado["dni"].ToString().Trim() + "|" +
+                                    masticado["nombre_completo"].ToString();
+                            }
                         }
-                        Console.WriteLine(datos);
                     }
+                    catch
+                    {
+                        datos = "00000000".ToString().Trim() + "|" + "CLIENTE NO IDENTIFICADO";
+                    }
+                    Console.WriteLine(datos);
                 }
                 //Console.ReadKey();
             }
