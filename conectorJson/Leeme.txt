@@ -1,0 +1,2 @@
+﻿- desde marzo del 2023 se usó el metodo de ruc.com.pe
+- clase Program, adecuaciones para el uso de "apisperu", retorna json y consultas gratis < 2000 x mes ................... 09/04/2024
