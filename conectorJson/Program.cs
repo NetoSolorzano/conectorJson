@@ -110,21 +110,29 @@ namespace conectorJson
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        var masticado = JObject.Parse(result);
                         string datos = "";
-                        if (masticado.HasValues == true)
+                        var masticado = JObject.Parse(result);
+                        if (masticado["success"].ToString().ToLower() == "false")
                         {
-                            datos = masticado["ruc"].ToString() + "|" +
-                                masticado["razonSocial"].ToString() + "|" +
-                                masticado["estado"].ToString() + "|" +
-                                masticado["condicion"].ToString() + "|" +
-                                masticado["ubigeo"].ToString() + "|" +
-                                masticado["direccion"].ToString() + "|" +
-                                masticado["distrito"].ToString() + "|" +
-                                masticado["provincia"].ToString() + "|" +
-                                masticado["departamento"].ToString();
+                            datos = "00000000000".ToString().Trim() + "|" + "RUC NO EXISTE O CON BAJA DE OFICIO";
+                        }
+                        else
+                        {
+                            if (masticado.HasValues == true)
+                            {
+                                datos = masticado["ruc"].ToString() + "|" +
+                                    masticado["razonSocial"].ToString() + "|" +
+                                    masticado["estado"].ToString() + "|" +
+                                    masticado["condicion"].ToString() + "|" +
+                                    masticado["ubigeo"].ToString() + "|" +
+                                    masticado["direccion"].ToString() + "|" +
+                                    masticado["distrito"].ToString() + "|" +
+                                    masticado["provincia"].ToString() + "|" +
+                                    masticado["departamento"].ToString();
+                            }
                         }
                         Console.WriteLine(datos);
+                        //Console.ReadKey();
                     }
                 }
                 else
@@ -148,6 +156,10 @@ namespace conectorJson
                                         masticado["nombres"].ToString().Trim() + " " +
                                         masticado["apellidoPaterno"].ToString().Trim() + " " +
                                         masticado["apellidoMaterno"].ToString().Trim();
+                                }
+                                else
+                                {
+                                    datos = "00000000".ToString().Trim() + "|" + "CLIENTE NO IDENTIFICADO";
                                 }
                             }
                             else
