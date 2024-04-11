@@ -112,11 +112,7 @@ namespace conectorJson
                         var result = streamReader.ReadToEnd();
                         string datos = "";
                         var masticado = JObject.Parse(result);
-                        if (masticado["success"].ToString().ToLower() == "false")
-                        {
-                            datos = "00000000000".ToString().Trim() + "|" + "RUC NO EXISTE O CON BAJA DE OFICIO";
-                        }
-                        else
+                        if (masticado["success"] == null)
                         {
                             if (masticado.HasValues == true)
                             {
@@ -129,6 +125,32 @@ namespace conectorJson
                                     masticado["distrito"].ToString() + "|" +
                                     masticado["provincia"].ToString() + "|" +
                                     masticado["departamento"].ToString();
+                            }
+                            else
+                            {
+                                datos = "00000000000".ToString().Trim() + "|" + "RUC NO EXISTE O CON BAJA DE OFICIO";
+                            }
+                        }
+                        else
+                        {
+                            if (masticado["success"].ToString().ToLower() == "false")
+                            {
+                                datos = "00000000000".ToString().Trim() + "|" + "RUC NO EXISTE O CON BAJA DE OFICIO";
+                            }
+                            else
+                            {
+                                if (masticado.HasValues == true)
+                                {
+                                    datos = masticado["ruc"].ToString() + "|" +
+                                        masticado["razonSocial"].ToString() + "|" +
+                                        masticado["estado"].ToString() + "|" +
+                                        masticado["condicion"].ToString() + "|" +
+                                        masticado["ubigeo"].ToString() + "|" +
+                                        masticado["direccion"].ToString() + "|" +
+                                        masticado["distrito"].ToString() + "|" +
+                                        masticado["provincia"].ToString() + "|" +
+                                        masticado["departamento"].ToString();
+                                }
                             }
                         }
                         Console.WriteLine(datos);
