@@ -75,7 +75,7 @@ namespace conectorJson
                 }
                 else
                 {   // args[1].ToString() == "1"
-                    string datos = "";
+                    string datos = "00000000".ToString().Trim() + "|" + "CLIENTE NO IDENTIFICADO";
                     try
                     {
                         var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.apis.net.pe/v2/reniec/dni?numero=" + numero);
@@ -107,9 +107,9 @@ namespace conectorJson
                                 }
                             }
                         }
-                        Console.WriteLine(datos);
-                        //Console.ReadKey();
-                    } catch (Exception ex) { datos = "00000000000".ToString().Trim() + "|" + "ERROR ... LLAME A SOPORTE"; }
+                    } catch (Exception ex) { datos = "00000000".ToString().Trim() + "|" + "CLIENTE NO IDENTIFICADO"; }
+                    Console.WriteLine(datos);
+                    //Console.ReadKey();
                 }
 
                 #endregion
